@@ -2,17 +2,20 @@
 PARAM_LENGTH=$#
 
 help_text () {
-    echo "USAGE"
+    echo "Wrong Number of arguments, USAGE:"
     echo "./start.sh resourceGroupName"
 }
 
-#Create Resource Group
-RG_NAME=$1
-echo $RG_NAME
-az group create -n $RG_NAME -l northeurope
-
 if [ $PARAM_LENGTH -lt 1 ]
 then
-help_text
+    help_text
+    exit 0
 fi
+
+#Create Resource Group
+RG_NAME=$1
+az group create -n $RG_NAME -l northeurope
+
+
+
 
