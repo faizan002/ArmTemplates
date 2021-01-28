@@ -1,0 +1,10 @@
+---
+- hosts: packer
+  become: true
+
+  tasks:
+  - name: install sample package
+    apt:
+      name: curl
+      state:  present
+      update_cache: yes
