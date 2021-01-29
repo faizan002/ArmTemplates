@@ -2,7 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-
         "virtualNetworks_externalid": {
             "defaultValue": "",
             "type": "String"
@@ -12,6 +11,13 @@
             "type": "string",
             "metadata": {
                 "description": "The subnetName, this is used to construct subnet id together with virtualNetwork."
+            }
+        },
+        "imagereference_id": {
+            "defaultValue": "",
+            "type": "string",
+            "metadata": {
+                "description": "The source image, created using packer"
             }
         }
     },
@@ -45,6 +51,64 @@
                 },
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false
+            }
+        },
+         {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-07-01",
+            "name": "testVM",
+            "location": "northeurope",
+            "tags": {
+                "dept": "automation"
+            },
+            "dependsOn": [
+                "Microsoft.Network/networkInterfaces/nic1"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_B2ms"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "id": "[parameters('imagereference_id')]"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "testVM_disk1",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Standard_LRS"
+                        },
+                        "diskSizeGB": 30
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "testVM",
+                    "adminUsername": "myuser",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "/home/myuser/.ssh/authorized_keys",
+                                    "keyData": "dummy key"
+                                }
+                            ]
+                        },
+                    "provisionVMAgent": true
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', 'nic1')]"
+                        }
+                    ]
+                }
             }
         }
     ]
