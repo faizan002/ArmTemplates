@@ -15,7 +15,7 @@
       "subscription_id": "{{user `azure_subscription_id`}}",
   
       "managed_image_resource_group_name": "{{user `azure_resource_group`}}",
-      "managed_image_name": "myimage",
+      "managed_image_name": "{{user `azure_image_name`}}",
   
       "os_type": "Linux",
       "image_publisher": "Canonical",
