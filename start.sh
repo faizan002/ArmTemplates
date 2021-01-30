@@ -19,12 +19,14 @@ then
 fi
 
 RG_NAME=$1
+prepare_image_name
 az group create -n $RG_NAME -l northeurope
 
 #Create packer image
-packer build -var azure_resource_group=$RG_NAME -var azure_image_name=prepare_image_name packer_image.json
+#packer build -var azure_resource_group=$RG_NAME -var azure_image_name=$IMAGE_NAME packer_image.json
 
 #Create test VM from the generated packer image
+az deployment group create --resource-group $RG_NAME --template-file deploy_vm.json --parameters private.parameters.json
 
 
 
