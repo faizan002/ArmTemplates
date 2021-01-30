@@ -3,10 +3,22 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "virtualNetworks_externalid": {
-            "value": "substitute_your_values"
+            "value": ""
         },
         "subnetname": {
-            "value": "substitute_your_value"
+            "value": ""
+        },
+        "imagereference_id":{
+            "value": ""
+        },
+        "vmName": {
+            "value": "testvm"
+        },
+        "adminKey":{
+            "value": ""
+        },
+        "adminUser":{
+            "value": ""
         }
     }
 }
