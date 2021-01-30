@@ -56,6 +56,12 @@
             "dept": "Engineering"
         }
     },
+    "outputs":{
+        "networkInterface":{
+            "value": "[reference(resourceId('Microsoft.Network/networkInterfaces', variables('nicName')),'2016-09-01')]",
+            "type": "object"
+        }
+    },
     "resources": [
         {
             "type": "Microsoft.Network/networkInterfaces",
