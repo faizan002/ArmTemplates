@@ -22,7 +22,7 @@ Decomission the VM, using azure command line as described later.
 ## Create a packer image
 Update the provisioning or anything else in the code and run the script "start.sh" to create a new packer image.
 
-## Usage
+### Usage
 Run the launcher script
 
 ```bash
@@ -30,5 +30,16 @@ create_packer_image.sh RESOURCEGROUP_NAME
 ```
 It creates the resourceGroup if it is not already there.
 
+
+## Create a VM from packar image
+Fill in the values in the parameter file "deploy_vm.parameters.json" and run the following commands in sequence.
+
+The *deploy_vm.parameters.json* file is empty since I did not want to post any personal values on github public repo. However, in a private repo, most values can still be checked into repo. 
+
+```bash
+az group create -n myresourcegroupname -l northeurope
+az deployment group create --resource-group myresourcegroupname --template-file deploy_vm.json --parameters deploy_vm.parameters.json
+```
+**Note:** choose a meaningful name instead of "myresourcegroupname".
 
 
