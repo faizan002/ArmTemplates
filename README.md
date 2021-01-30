@@ -42,6 +42,10 @@ az deployment group create --resource-group myresourcegroupname --template-file 
 ```
 **Note:** choose a meaningful name instead of "myresourcegroupname".
 
-Access the machine, either by getting IP via Azure portal or the ARM template outputs pvtIP as to console, look for: _"privateIPAddress":_
+Access the machine, either by getting IP via Azure portal or the ARM template outputs pvtIP as to console, look for: _"privateIPAddress":_ or can use the following command to get IP address.
+```bash
+az deployment group show -g myawesomergname -n deploy_vm --query properties.outputs.networkInterface.value.ipConfigurations[0].properties.privateIPAddress
+```
+
 
 
