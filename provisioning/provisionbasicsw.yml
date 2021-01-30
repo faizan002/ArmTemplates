@@ -1,0 +1,6 @@
+---
+- hosts: packer
+  become: true
+
+  roles:
+  - docker

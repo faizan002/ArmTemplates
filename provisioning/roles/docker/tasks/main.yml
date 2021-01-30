@@ -1,0 +1,45 @@
+---
+
+- name: add docker repository (xenial)
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+  become: true
+  when: ansible_distribution_release=="xenial"
+
+- name: install apt-key gpg/https prereqs
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-curl
+  become: true
+
+- name: add docker apt key
+  apt_key:
+    keyserver: https://download.docker.com/linux/ubuntu/gpg
+    id: 0EBFCD88
+    state: present
+  become: true
+
+- name: install docker engine
+  apt: 
+    name: docker-ce=5:19.03.4*
+    state: present
+    update_cache: yes
+    cache_valid_time: 0
+  become: true
+
+- name: create docker group
+  group: 
+    name: docker
+    state: present
+  become: true
+
+- name: Reload deamon
+  systemd: daemon_reload=yes
+  become: yes
+  
+- name: service docker restart
+  service: name=docker state=restarted
+  become: yes
